@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Codebase Intelligence — Graph Viewer</title>
+  <link rel="stylesheet" href="style.css" />
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="toolbar">
+    <span class="brand">Codebase Intelligence</span>
+    <span class="repo" id="repo" title="Repository root">Repository: …</span>
+    <label class="field symbol-field">
+      Symbol
+      <input id="symbol" list="symbols" placeholder="models.User" value="models.User" autocomplete="off" />
+      <datalist id="symbols"></datalist>
+    </label>
+    <label class="field depth-field">
+      Depth
+      <select id="depth">
+        <option value="0">0</option>
+        <option value="1" selected>1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+    </label>
+    <button id="load" type="button">Load</button>
+    <span class="status" id="status">Initializing…</span>
+  </header>
+
+  <main class="layout">
+    <div id="scene" class="scene"></div>
+    <aside class="panel" id="panel">
+      <h2>Details</h2>
+      <p class="hint">Select a node or an edge.</p>
+      <div id="details"></div>
+      <h2 class="legend-title">Node types</h2>
+      <ul class="legend">
+        <li><span class="dot" style="background:#4f8ef7"></span>class</li>
+        <li><span class="dot" style="background:#43a047"></span>function</li>
+        <li><span class="dot" style="background:#26a69a"></span>method</li>
+        <li><span class="dot" style="background:#e57373"></span>database table</li>
+        <li><span class="dot" style="background:#ba68c8"></span>configuration</li>
+        <li><span class="dot" style="background:#a1887f"></span>test</li>
+        <li><span class="dot" style="background:#607d8b"></span>external / unresolved</li>
+      </ul>
+    </aside>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
