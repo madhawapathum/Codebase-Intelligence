@@ -303,6 +303,33 @@ Results are bounded by a configurable `RetrievalLimits` budget and retain proven
 (file, line, confidence, resolution). Embeddings, vector databases, and RAG are not
 used yet; the retrieval layer returns structured facts and source context.
 
+## AI tool interface
+
+`codebase_intelligence.tools.CodebaseTools` is a thin, read-only, provider-neutral
+tool boundary above the retrieval layer:
+
+```text
+AI  →  CodebaseTools  →  Retriever  →  GraphStore  →  SQLite
+```
+
+Each tool call returns a structured, JSON-compatible envelope:
+
+```json
+{"ok": true, "tool": "get_symbol", "query": "models.User", "result": {...}}
+{"ok": false, "tool": "get_symbol", "query": "...", "error": {"type": "symbol_not_found", "message": "..."}}
+```
+
+List tools and simulate a tool call from the CLI:
+
+```powershell
+python analyzer.py --tool-list
+python analyzer.py --database ".\myapp.db" --tool get_context --arguments "{\"name\":\"app.create_user\"}"
+```
+
+The interface is read-only (no code execution, no SQL, no graph mutation), bounded
+by `RetrievalLimits`, and returns structured errors for unknown tools, unknown
+symbols, and invalid arguments.
+
 ## 3D viewer
 
 A small Three.js graph viewer lives in `visualizer/`. Start it with:

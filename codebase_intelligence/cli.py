@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 from pathlib import Path
 
@@ -26,6 +27,9 @@ def build_parser() -> argparse.ArgumentParser:
     query_group.add_argument("--tests", metavar="SYMBOL", help="List tests associated with a symbol")
     query_group.add_argument("--database-context", metavar="SYMBOL", help="Retrieve database relationships for a symbol")
     query_group.add_argument("--config-context", metavar="SYMBOL", help="Retrieve configuration references for a symbol")
+    parser.add_argument("--tool-list", action="store_true", help="List available AI tool definitions")
+    parser.add_argument("--tool", metavar="NAME", help="Execute an AI tool (requires --database and --arguments)")
+    parser.add_argument("--arguments", metavar="JSON", default="{}", help="JSON object of arguments for --tool")
     parser.add_argument("--depth", type=int, default=1, help="Neighborhood depth (maximum 3)")
     parser.add_argument("--limit", type=int, default=100, help="Maximum query results")
     parser.add_argument("--exclude", action="append", default=[], help="Directory names to exclude")
@@ -38,6 +42,32 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv=None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
+
+    if args.tool_list:
+        from .serializer import to_json
+        from .tools import get_tool_definitions
+
+        print(to_json({"tools": get_tool_definitions()}, pretty=True))
+        return 0
+
+    if args.tool:
+        if not args.database:
+            parser.error("--tool requires --database")
+        from .serializer import to_json
+        from .tools import CodebaseTools
+
+        try:
+            arguments = json.loads(args.arguments) if args.arguments else {}
+        except ValueError as exc:
+            print(f"error: invalid --arguments JSON: {exc}", file=sys.stderr)
+            return 1
+        if not isinstance(arguments, dict):
+            print("error: --arguments must be a JSON object", file=sys.stderr)
+            return 1
+        result = CodebaseTools(args.database).call(args.tool, arguments)
+        print(to_json(result, pretty=True))
+        return 0
+
     query_requested = any(
         (
             args.summary,

@@ -14,9 +14,11 @@ from .parser import parse_file
 from .repository import Repository
 from .graph_store import GraphStore
 from .retrieval import Retriever, RetrievalLimits
+from .tools import CodebaseTools, execute_tool, get_tool_definitions
 
 __all__ = [
     "ClassInfo",
+    "CodebaseTools",
     "FileInfo",
     "FunctionInfo",
     "GraphStore",
@@ -28,5 +30,7 @@ __all__ = [
     "Retriever",
     "RetrievalLimits",
     "Symbol",
+    "execute_tool",
+    "get_tool_definitions",
     "parse_file",
 ]
