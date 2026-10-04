@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from codebase_intelligence.repository import Repository
 
 
@@ -103,7 +105,7 @@ def test_test_file_conventions_and_test_symbols_are_reported(tmp_path):
     file_flags = {item["path"]: item["is_test_file"] for item in model["files"]}
     symbols = {item["qualified_name"]: item for item in model["symbols"]}
 
-    assert file_flags["tests\\test_auth.py"] is True
+    assert file_flags[str(Path("tests") / "test_auth.py")] is True
     assert file_flags["auth_test.py"] is True
     assert file_flags["application.py"] is False
     assert symbols["tests.test_auth.test_login"]["kind"] == "test_function"
