@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/madhawapathum/Codebase-Intelligence/compare/v1.1.0...v1.2.0) (2026-10-04)
+
+
+### Features
+
+* Add codebase intelligence retrieval and AI tool interface ([ee20a34](https://github.com/madhawapathum/Codebase-Intelligence/commit/ee20a34aa2d7905a59b750cacbbe6bd36860c27f))
+
 ## [1.1.0](https://github.com/madhawapathum/Codebase-Intelligence/compare/v1.0.0...v1.1.0) (2026-10-04)
 
 
