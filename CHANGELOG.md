@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/madhawapathum/Codebase-Intelligence/compare/v1.2.0...v1.2.1) (2026-10-04)
+
+
+### Bug Fixes
+
+* make test path assertions platform independent ([e9c9f1b](https://github.com/madhawapathum/Codebase-Intelligence/commit/e9c9f1b5382eee97c27c27dfae4712d105dabb4f))
+
 ## [1.2.0](https://github.com/madhawapathum/Codebase-Intelligence/compare/v1.1.0...v1.2.0) (2026-10-04)
 
 
